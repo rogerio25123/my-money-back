@@ -68,14 +68,13 @@ public class LancamentoResource {
 	
 	@PostMapping("/anexo")
 	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
-	public String uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
+	public Anexo uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
 //		OutputStream out = new FileOutputStream("C:/Angular/anexo--"+anexo.getOriginalFilename());
 //		out.write(anexo.getBytes());
 //		out.close();
 //		return "ok";
 		 String nome = s3.salvarTemporariamente(anexo);
-		 return nome;
-		 //return new Anexo(nome, s3.configurarUrl(nome));
+		 return new Anexo(nome, s3.configurarUrl(nome));
 	}
 	
 	@GetMapping("/relatorios/por-pessoa")
